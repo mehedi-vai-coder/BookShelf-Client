@@ -1,14 +1,22 @@
-import React from 'react';
-import { NavLink } from 'react-router';
+import React, { use } from 'react';
+import { Link, NavLink } from 'react-router';
+import { AuthContext } from '../Context/AuthContext';
 
 const Navbar = () => {
-
+    const { user, logOut } = use(AuthContext);
+    const handleLogout = () => {
+        logOut().then(() => {
+            alert("You logged Out Successfully")
+        }).catch((error) => {
+            console.log(error)
+        })
+    };
     const links = <>
         <li><NavLink to='/'>Home</NavLink></li>
         <li><NavLink to='/bookshelf'>Bookshelf</NavLink></li>
         <li><NavLink to='/addbooks'>Add Book</NavLink></li>
         <li><NavLink to='/mybooks'>My Books</NavLink></li>
-        
+
     </>
     return (
         <div className="navbar bg-base-100 shadow-sm">
@@ -27,12 +35,17 @@ const Navbar = () => {
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
-                  {links}
+                    {links}
                 </ul>
             </div>
-            <div className="navbar-end">
-               <NavLink className='btn btn-link' to='/register'>Register</NavLink>
-               <NavLink className='btn btn-neutral' to='/login'>Login</NavLink>
+            <div className="navbar-end gap-4">
+                {
+                    user ? <button onClick={handleLogout} className="btn btn-primary px-10 " >Logout</button> : <NavLink className='btn btn-neutral' to='/login'>Login</NavLink>
+                }
+                {
+                    user ? '' : <NavLink className='btn btn-primary' to='/register'>Register</NavLink>
+                }
+
             </div>
         </div>
     );
