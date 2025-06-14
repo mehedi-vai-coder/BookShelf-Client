@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Bookshelf  = () => {
+const AddBook = () => {
     return (
         <div>
-            All the books
+            Add Your books
         </div>
     );
 };
 
-export default Bookshelf ;
+export default AddBook;
