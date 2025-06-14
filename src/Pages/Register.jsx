@@ -1,10 +1,37 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Player } from "@lottiefiles/react-lottie-player";
-import registerAnim from "../assets/Animation - 1749897956409.json"; 
+import registerAnim from "../assets/Animation - 1749897956409.json";
+import { use } from "react";
+import { AuthContext } from "../Context/AuthContext";
 
 
 const Register = () => {
+    const { createUser } = use(AuthContext);
+
+    const handleRegister = (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const name = form.name.value;
+        const email = form.email.value;
+        const password = form.password.value;
+        const photoUrl = form.photourl.value;
+        console.log(name, password, email, photoUrl)
+
+        //    create user 
+        createUser(email, password)
+            .then((user) => {
+                console.log(user)
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorCode,errorMessage)
+                
+            });
+
+    }
+
     return (
         <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -26,7 +53,7 @@ const Register = () => {
             <div className="w-full md:w-1/2 max-w-md bg-white rounded-2xl shadow-2xl p-8">
                 <h2 className="text-3xl font-bold text-center text-purple-700 mb-6">Create Account</h2>
 
-                <form className="space-y-4">
+                <form onSubmit={handleRegister} className="space-y-4">
                     {/* Name */}
                     <div>
                         <label className="block text-gray-700 font-medium mb-1">Full Name</label>
