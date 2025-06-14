@@ -40,10 +40,11 @@ const Navbar = () => {
             </div>
             <div className="navbar-end gap-4">
                 {
-                    user ? <button onClick={handleLogout} className="btn btn-primary px-10 " >Logout</button> : <NavLink className='btn btn-neutral' to='/login'>Login</NavLink>
-                }
-                {
-                    user ? '' : <NavLink className='btn btn-primary' to='/register'>Register</NavLink>
+                    user ? <button onClick={handleLogout} className="btn btn-circle px-10 " >SignOut</button> :
+                    <>
+                      <NavLink className='btn btn-neutral' to='/login'>Login</NavLink>
+                       <NavLink className='btn btn-primary' to='/register'>Register</NavLink>
+                    </> 
                 }
 
             </div>

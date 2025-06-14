@@ -1,9 +1,12 @@
 import React from 'react';
+import BookshelfBanner from './BookshelfBanner';
+
 
 const Home = () => {
     return (
         <div>
-            this is home
+            <BookshelfBanner></BookshelfBanner>
+            This is home
         </div>
     );
 };

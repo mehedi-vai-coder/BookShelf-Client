@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion } from "motion/react"
 import { Player } from "@lottiefiles/react-lottie-player";
 import registerAnim from "../assets/Animation - 1749897956409.json";
 import { use } from "react";
