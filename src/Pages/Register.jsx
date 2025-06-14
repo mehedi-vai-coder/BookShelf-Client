@@ -18,7 +18,7 @@ const Register = () => {
                     autoplay
                     loop
                     src={registerAnim}
-                    style={{ height: "400px", width: "400px" }}
+                    style={{ height: "600px", width: "600px" }}
                 />
             </div>
 
@@ -32,6 +32,7 @@ const Register = () => {
                         <label className="block text-gray-700 font-medium mb-1">Full Name</label>
                         <input
                             type="text"
+                            name="name"
                             placeholder="Your Name"
                             className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400"
                             required
@@ -43,6 +44,7 @@ const Register = () => {
                         <label className="block text-gray-700 font-medium mb-1">Email Address</label>
                         <input
                             type="email"
+                            name="email"
                             placeholder="you@example.com"
                             className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400"
                             required
@@ -54,6 +56,7 @@ const Register = () => {
                         <label className="block text-gray-700 font-medium mb-1">Profile Photo URL</label>
                         <input
                             type="url"
+                            name="photourl"
                             placeholder="https://photo-url.com"
                             className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400"
                             required
@@ -65,6 +68,7 @@ const Register = () => {
                         <label className="block text-gray-700 font-medium mb-1">Password</label>
                         <input
                             type="password"
+                            name="password"
                             placeholder="Password"
                             className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400"
                             required
