@@ -1,33 +1,72 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "motion/react"
 import { Player } from "@lottiefiles/react-lottie-player";
 import registerAnim from "../assets/Animation - 1749897956409.json";
-import { use } from "react";
+import { use, useState } from "react";
 import { AuthContext } from "../Context/AuthContext";
+import { GoogleAuthProvider, signInWithPopup, updateCurrentUser } from "firebase/auth";
+import { auth } from "../firebase/firebase.init";
 
 
 const Register = () => {
-    const { createUser } = use(AuthContext);
+    const { createUser, setUser,user } = use(AuthContext);
+    const [nameError, setNameError] = useState();
+    const [validPass, setValidPass] = useState('');
+    const provider = new GoogleAuthProvider;
+    const navigate = useNavigate();
 
+    const handleGoogleSignIn = () => {
+        signInWithPopup(auth, provider)
+            .then(result => {
+                navigate(`${location.state ? location.state : "/"}`)
+                console.log(result)
+            }).then(error => {
+                console.log(error)
+            })
+    }
     const handleRegister = (e) => {
         e.preventDefault();
         const form = e.target;
         const name = form.name.value;
+        if (name.length < 5) {
+            setNameError("Name should be more then 5 character")
+            return;
+        } else {
+            setNameError("")
+        }
         const email = form.email.value;
         const password = form.password.value;
+        if (password.length < 6) {
+            setValidPass("Password should be more than 6 character")
+            return;
+        } else {
+            setValidPass('');
+        }
+        if (!/[A-Z]/.test(password)) {
+            setValidPass("Password must contain at least one uppercase letter.");
+            return;
+        }
+        if (!/[a-z]/.test(password)) {
+            setValidPass("Password must contain at least one lowercase letter.");
+            return;
+        }
         const photoUrl = form.photourl.value;
-        console.log(name, password, email, photoUrl)
 
         //    create user 
         createUser(email, password)
             .then((user) => {
                 console.log(user)
+                navigate(`${location.state ? location.state : "/"}`)
+                updateCurrentUser({ displayName: name, photoURL: photoUrl })
+            })
+            .then(() => {
+                setUser({ ...user, displayName: name, photoURL: photoUrl })
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                console.log(errorCode,errorMessage)
-                
+                console.log(errorCode, errorMessage)
+
             });
 
     }
@@ -64,6 +103,9 @@ const Register = () => {
                             className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400"
                             required
                         />
+                        {
+                            nameError && <p className='text-red-600'>{nameError}</p>
+                        }
                     </div>
 
                     {/* Email */}
@@ -100,6 +142,9 @@ const Register = () => {
                             className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400"
                             required
                         />
+                        {
+                            validPass && <p className='text-red-600'>{validPass}</p>
+                        }
                         <p className="text-xs text-gray-500 mt-1">
                             Must be 6+ chars, include upper and lower case
                         </p>
@@ -125,7 +170,7 @@ const Register = () => {
 
                 <div className="mt-4 text-center">
                     <p className="text-gray-500 mb-2">or</p>
-                    <button className="w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg transition duration-300">
+                    <button onClick={handleGoogleSignIn} className="w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg transition duration-300">
                         Sign Up with Google
                     </button>
                 </div>
