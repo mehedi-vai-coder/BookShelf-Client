@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { use, useState } from 'react';
 import axios from 'axios';
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import { AuthContext } from '../Context/AuthContext';
 
-const AddBookForm = ({ user }) => {
+const AddBookForm = () => {
+    const { user } = use(AuthContext);
+
     const [formData, setFormData] = useState({
         book_title: '',
         cover_photo: '',
@@ -14,7 +17,7 @@ const AddBookForm = ({ user }) => {
         book_overview: '',
         upvote: 0,
         user_email: user?.email || '',
-        user_name: user?.name || '',
+        user_name: user?.displayName || '',
     });
 
     const handleChange = (e) => {
@@ -26,7 +29,7 @@ const AddBookForm = ({ user }) => {
         e.preventDefault();
 
         try {
-            const res = await axios.post('http://localhost:5000/books', formData); 
+            const res = await axios.post('http://localhost:5000/books', formData);
 
             if (res.data.insertedId) {
                 Swal.fire({
@@ -46,18 +49,18 @@ const AddBookForm = ({ user }) => {
                     user_email: user?.email || '',
                     user_name: user?.name || '',
                 });
-               
+
             } else {
-                toast.error('❌ Something went wrong!');
+                toast.error('Something went wrong!');
             }
         } catch (err) {
             console.error(err);
-            toast.error('⚠️ Failed to add book. Try again.');
+            toast.error(' Failed to add book. Try again.');
         }
     };
 
     return (
-        <div className="max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-xl mt-10">
+        <div className="max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-xl mt-20 mb-20">
             <h2 className="text-3xl font-bold text-center text-blue-700 mb-6">📚 Add a New Book</h2>
 
             <form onSubmit={handleSubmit} className="space-y-6">

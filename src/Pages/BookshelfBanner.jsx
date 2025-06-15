@@ -64,6 +64,7 @@ const BookshelfBanner = () => {
                     <img src="https://pics.cdn.librarything.com/picsizes/16/60/16603104-b-h0-w200-pv25_597542582f51444941414141_v5.jpg" alt="Book 5" className="w-full h-full object-cover" />
                 </motion.div>
             </div>
+            
         </div>
     );
 };

@@ -4,12 +4,12 @@ import { Player } from "@lottiefiles/react-lottie-player";
 import registerAnim from "../assets/Animation - 1749897956409.json";
 import { use, useState } from "react";
 import { AuthContext } from "../Context/AuthContext";
-import { GoogleAuthProvider, signInWithPopup, updateCurrentUser } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup,updateProfile } from "firebase/auth";
 import { auth } from "../firebase/firebase.init";
 
 
 const Register = () => {
-    const { createUser, setUser,user } = use(AuthContext);
+    const { createUser, setUser,  } = use(AuthContext);
     const [nameError, setNameError] = useState();
     const [validPass, setValidPass] = useState('');
     const provider = new GoogleAuthProvider;
@@ -54,20 +54,22 @@ const Register = () => {
 
         //    create user 
         createUser(email, password)
-            .then((user) => {
-                console.log(user)
-                navigate(`${location.state ? location.state : "/"}`)
-                updateCurrentUser({ displayName: name, photoURL: photoUrl })
-            })
-            .then(() => {
-                setUser({ ...user, displayName: name, photoURL: photoUrl })
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorCode, errorMessage)
+            .then((userCredential) => {
+                const newUser = userCredential.user;
 
-            });
+                // ✅ Properly update display name and photo
+                updateProfile(newUser, {
+                    displayName: name,
+                    photoURL: photoUrl,
+                }).then(() => {
+                    // Optional: Set it in your context
+                    setUser({ ...newUser, displayName: name, photoURL: photoUrl });
+                    navigate(`${location.state ? location.state : "/"}`);
+                }).catch((error) => {
+                    console.log("Profile update error:", error);
+                });
+            })
+
 
     }
 
