@@ -2,10 +2,10 @@ import { createBrowserRouter } from "react-router";
 import MainlayOut from "../Layouts/MainlayOut";
 import Home from "../Pages/Home";
 import Bookshelf from "../Pages/Bookshelf ";
-import AddBook from "../Pages/AddBook";
 import Register from "../Pages/Register";
 import Login from "../Pages/Login";
 import MyBooks from "../Pages/MyBooks";
+import AddBookForm from "../Pages/AddBookForm";
 
  
 export const router = createBrowserRouter([
@@ -21,11 +21,11 @@ export const router = createBrowserRouter([
         {
             path:'/bookshelf',
             Component:Bookshelf,
-            
+
         },
         {
             path:'/addbooks',
-            Component:AddBook
+            Component:AddBookForm
         },
         {
             path:'mybooks',
