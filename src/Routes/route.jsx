@@ -8,12 +8,14 @@ import MyBooks from "../Pages/MyBooks";
 import AddBookForm from "../Pages/AddBookForm";
 import UpdateBookModal from "../Pages/UpdateBookModal";
 import Profile from "../Pages/Profile";
+import ErrorPage from "../Pages/ErrorPage";
 
  
 export const router = createBrowserRouter([
   {
     path: "/",
     Component: MainlayOut,
+    errorElement: ErrorPage,
     children: [
         {   
             index:true,
@@ -49,6 +51,10 @@ export const router = createBrowserRouter([
         {
             path:'profile',
             Component:Profile
+        },
+        {
+            path:'*',
+            Component:ErrorPage
         }
     ]
   },
