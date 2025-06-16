@@ -29,13 +29,13 @@ const Login = () => {
         const form = e.target;
         const email = form.email.value;
         const password = form.password.value;
-        console.log(password, email)
+        // console.log(password, email)
 
         // signIn User
         signInUser(email, password)
-            .then((user) => {
+            .then(() => {
                 navigate(`${location.state ? location.state : "/"}`)
-                console.log(user)
+                // console.log(user)
             })
             .catch((error) => {
                 const errorCode = error.code;
