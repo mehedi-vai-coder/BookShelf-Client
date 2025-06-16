@@ -1,14 +1,14 @@
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom'; // 🔥 Make sure you're using this
 
-const BooksGrid = () => {
+const Bookshelf = () => {
     const [books, setBooks] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [statusFilter, setStatusFilter] = useState('');
 
     useEffect(() => {
-        axios.get('http://localhost:5000/books') 
+        axios.get('http://localhost:5000/books')
             .then(res => setBooks(res.data))
             .catch(err => console.error('Error fetching books:', err));
     }, []);
@@ -67,9 +67,15 @@ const BooksGrid = () => {
                                 <p className="text-sm text-gray-600 mb-1">👤 {book.book_author}</p>
                                 <p className="text-sm text-blue-600 font-medium mb-1">{book.book_category}</p>
                                 <p className="text-xs text-gray-500 italic mb-2">{book.reading_status}</p>
-                                <div className="flex items-center justify-between">
+                                <div className="flex items-center justify-between mb-2">
                                     <span className="text-sm text-gray-500">👍 {book.upvote}</span>
                                 </div>
+                                <Link
+                                    to={`/books/${book._id}`} // 🔥 Navigates to dynamic book details
+                                    className="block text-center bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded-xl transition duration-200"
+                                >
+                                    Book Details
+                                </Link>
                             </div>
                         </div>
                     ))
@@ -81,4 +87,4 @@ const BooksGrid = () => {
     );
 };
 
-export default BooksGrid;
+export default Bookshelf;
