@@ -5,7 +5,7 @@ const PopularBooks = () => {
     const [popularBooks, setPopularBooks] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/books') 
+        axios.get('https://virtual-bookshelf-server-teal.vercel.app/books') 
             .then(res => {
                 const sorted = res.data
                     .sort((a, b) => b.upvote - a.upvote)

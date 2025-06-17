@@ -16,7 +16,7 @@ const MyBooks = () => {
 
     const fetchMyBooks = async () => {
         try {
-            const res = await axios.get("http://localhost:5000/books");
+            const res = await axios.get("https://virtual-bookshelf-server-teal.vercel.app/books");
             const filtered = res.data.filter(book => book.user_email === user?.email);
             setMyBooks(filtered);
             setLoading(false);
@@ -45,7 +45,7 @@ const MyBooks = () => {
 
         if (confirm.isConfirmed) {
             try {
-                await axios.delete(`http://localhost:5000/books/${id}`);
+                await axios.delete(`https://virtual-bookshelf-server-teal.vercel.app/books/${id}`);
                 Swal.fire("Deleted!", "Your book has been removed.", "success");
                 fetchMyBooks();
             } catch (err) {

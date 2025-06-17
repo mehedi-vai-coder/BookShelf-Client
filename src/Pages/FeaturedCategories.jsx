@@ -5,7 +5,7 @@ const FeaturedCategories = () => {
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/books')
+        axios.get('https://virtual-bookshelf-server-teal.vercel.app/books')
             .then(res => {
                 const categoryMap = {};
 

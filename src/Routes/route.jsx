@@ -53,7 +53,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'updatebook/:id',
-                loader: ({ params }) => fetch(`http://localhost:5000/books/${params.id}`),
+                loader: ({ params }) => fetch(`https://virtual-bookshelf-server-teal.vercel.app/books/${params.id}`),
                 Component: UpdateBookModal,
                 hydrateFallbackElement:<Loading></Loading>
             },
@@ -69,7 +69,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/books/:id",
-                loader: ({ params }) => fetch(`http://localhost:5000/books/${params.id}`),
+                loader: ({ params }) => fetch(`https://virtual-bookshelf-server-teal.vercel.app/books/${params.id}`),
                 hydrateFallbackElement:<Loading></Loading>,
                 element:<PrivateRoute>
                     <BookDetails></BookDetails>

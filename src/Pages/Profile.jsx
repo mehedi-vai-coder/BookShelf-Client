@@ -15,7 +15,7 @@ const Profile = () => {
 
         const fetchBooks = async () => {
             try {
-                const res = await axios.get("http://localhost:5000/books");
+                const res = await axios.get("https://virtual-bookshelf-server-teal.vercel.app/books");
                 const myBooks = res.data.filter((book) => book.user_email === user.email);
                 setBooks(myBooks);
 

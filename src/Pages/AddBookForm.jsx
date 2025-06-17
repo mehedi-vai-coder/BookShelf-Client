@@ -29,7 +29,7 @@ const AddBookForm = () => {
         e.preventDefault();
 
         try {
-            const res = await axios.post('http://localhost:5000/books', formData);
+            const res = await axios.post('https://virtual-bookshelf-server-teal.vercel.app/books', formData);
 
             if (res.data.insertedId) {
                 Swal.fire({

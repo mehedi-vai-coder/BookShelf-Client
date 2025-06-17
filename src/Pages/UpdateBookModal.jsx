@@ -17,7 +17,7 @@ const UpdateBookModal = ({ book, onClose, refetch }) => {
         const { _id, user_email, ...cleanedData } = formData;
 
         try {
-            const res = await axios.put(`http://localhost:5000/books/${book._id}`, cleanedData);
+            const res = await axios.put(`https://virtual-bookshelf-server-teal.vercel.app/books/${book._id}`, cleanedData);
             if (res.data.success) {
                 Swal.fire("✅ Updated!", "Book info updated successfully.", "success");
                 refetch();

@@ -18,7 +18,7 @@ const BookDetails = () => {
     useEffect(() => {
         const fetchBookDetails = async () => {
             try {
-                const bookRes = await axios.get(`http://localhost:5000/books/${id}`);
+                const bookRes = await axios.get(`https://virtual-bookshelf-server-teal.vercel.app/books/${id}`);
                 const bookData = bookRes.data;
                 bookData.upvote = Number(bookData.upvote);
                 // setBook();
@@ -33,7 +33,7 @@ const BookDetails = () => {
 
         const fetchReviews = async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/reviews?book_id=${id}`);
+                const res = await axios.get(`https://virtual-bookshelf-server-teal.vercel.app/reviews?book_id=${id}`);
                 setReviews(res.data);
 
                 const existing = res.data.find(r => r.reviewer_email === user?.email);
@@ -55,7 +55,7 @@ const BookDetails = () => {
         if (!user || user.email === book?.user_email) return;
 
         try {
-            const res = await axios.patch(`http://localhost:5000/books/${id}/upvote`);
+            const res = await axios.patch(`https://virtual-bookshelf-server-teal.vercel.app/books/${id}/upvote`);
             const updated = res.data;
 
             if (typeof updated?.upvote === 'number') {
@@ -74,7 +74,7 @@ const BookDetails = () => {
 
 
     const refreshReviews = async () => {
-        const res = await axios.get(`http://localhost:5000/reviews?book_id=${id}`);
+        const res = await axios.get(`https://virtual-bookshelf-server-teal.vercel.app/reviews?book_id=${id}`);
         setReviews(res.data);
         setUserReview('');
         setEditingReviewId(null);
@@ -94,9 +94,9 @@ const BookDetails = () => {
 
         try {
             if (editingReviewId) {
-                await axios.patch(`http://localhost:5000/reviews/${editingReviewId}`, { review_text: userReview });
+                await axios.patch(`https://virtual-bookshelf-server-teal.vercel.app/reviews/${editingReviewId}`, { review_text: userReview });
             } else {
-                await axios.post(`http://localhost:5000/reviews`, payload);
+                await axios.post(`https://virtual-bookshelf-server-teal.vercel.app/reviews`, payload);
             }
             await refreshReviews();
         } catch (err) {
@@ -106,7 +106,7 @@ const BookDetails = () => {
 
     const handleDeleteReview = async (reviewId) => {
         try {
-            await axios.delete(`http://localhost:5000/reviews/${reviewId}`);
+            await axios.delete(`https://virtual-bookshelf-server-teal.vercel.app/reviews/${reviewId}`);
             await refreshReviews();
         } catch (err) {
             console.error(err);
@@ -136,7 +136,7 @@ const BookDetails = () => {
                         onChange={async (e) => {
                             const newStatus = e.target.value;
                             try {
-                                const res = await axios.patch(`http://localhost:5000/books/${id}`, {
+                                const res = await axios.patch(`https://virtual-bookshelf-server-teal.vercel.app/books/${id}`, {
                                     reading_status: newStatus
                                 });
 
