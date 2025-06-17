@@ -11,14 +11,26 @@ const Navbar = () => {
             console.log(error)
         })
     };
-    const links = <>
-        <li><NavLink to='/'>Home</NavLink></li>
-        <li><NavLink to='/bookshelf'>Bookshelf</NavLink></li>
-        <li><NavLink to='/addbooks'>Add Book</NavLink></li>
-        <li><NavLink to='/mybooks'>My Books</NavLink></li>
-        <li><NavLink to='/profile'>Profile</NavLink></li>
+    const navItems = [
+        { name: 'Home', path: '/' },
+        { name: 'Bookshelf', path: '/bookshelf' },
+        { name: 'Add Book', path: '/addbooks' },
+        { name: 'My Books', path: '/mybooks' },
+        { name: 'Profile', path: '/profile' },
+    ];
+    const links = navItems.map((item) => (
+        <li key={item.path}>
+            <NavLink
+                to={item.path}
+                className={({ isActive }) =>
+                    isActive ? 'text-blue-600 font-bold underline' : ''
+                }
+            >
+                {item.name}
+            </NavLink>
+        </li>
+    ));
 
-    </>
     return (
         <div className="navbar bg-base-100 shadow-sm">
             <div className="navbar-start">

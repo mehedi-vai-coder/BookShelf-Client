@@ -56,28 +56,21 @@ const BookDetails = () => {
 
         try {
             const res = await axios.patch(`http://localhost:5000/books/${id}/upvote`);
-
             const updated = res.data;
 
-            if (updated?.upvote !== undefined) {
+            if (typeof updated?.upvote === 'number') {
                 setUpvoteCount(updated.upvote);
                 setBook(prev => ({
                     ...prev,
                     upvote: updated.upvote
                 }));
             } else {
-                console.warn("Upvote response missing expected data:", res.data);
+                console.warn("Unexpected upvote response:", res.data);
             }
         } catch (err) {
             console.error("Upvote failed:", err);
         }
     };
-
-
-
-
-
-
 
 
     const refreshReviews = async () => {
@@ -134,7 +127,39 @@ const BookDetails = () => {
             <p className="text-gray-600">By: {book.book_author}</p>
             <p>📄 Pages: {book.total_page}</p>
             <p>📚 Category: {book.book_category}</p>
-            <p>📘 Status: {book.reading_status}</p>
+            {/* 🔁 Reading Status Tracker */}
+            <div className="flex items-center gap-2 my-2">
+                <span>📘 Status:</span>
+                {user?.email === book.user_email ? (
+                    <select
+                        value={book.reading_status}
+                        onChange={async (e) => {
+                            const newStatus = e.target.value;
+                            try {
+                                const res = await axios.patch(`http://localhost:5000/books/${id}`, {
+                                    reading_status: newStatus
+                                });
+
+                                if (res.status === 200) {
+                                    setBook(prev => ({
+                                        ...prev,
+                                        reading_status: newStatus
+                                    }));
+                                }
+                            } catch (err) {
+                                console.error("Failed to update reading status:", err);
+                            }
+                        }}
+                        className="border rounded px-2 py-1 text-sm"
+                    >
+                        {book.reading_status === "Want-to-Read" && <option value="Reading">Reading</option>}
+                        {book.reading_status === "Reading" && <option value="Read">Read</option>}
+                        <option value={book.reading_status}>{book.reading_status}</option>
+                    </select>
+                ) : (
+                    <span>{book.reading_status}</span>
+                )}
+            </div>
             <p className="my-4 italic text-gray-700">{book.book_overview}</p>
 
             <div className="my-4 text-sm text-gray-500">
@@ -142,15 +167,14 @@ const BookDetails = () => {
             </div>
 
             {user && user.email !== book.user_email && (
-                <>
-                    <button
-                        onClick={handleUpvote}
-                        className="bg-indigo-600 text-white px-4 py-2 rounded-xl hover:bg-indigo-700"
-                    >
-                        (🔼 Upvote ({upvoteCount}))
-                    </button>
-                </>
+                <button
+                    onClick={handleUpvote}
+                    className="bg-indigo-600 text-white px-4 py-2 rounded-xl hover:bg-indigo-700 transition"
+                >
+                    🔼 Upvote ({upvoteCount})
+                </button>
             )}
+
 
 
 
