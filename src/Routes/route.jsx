@@ -10,6 +10,7 @@ import UpdateBookModal from "../Pages/UpdateBookModal";
 import Profile from "../Pages/Profile";
 import ErrorPage from "../Pages/ErrorPage";
 import BookDetails from "../Pages/BookDetails";
+import PrivateRoute from "../Context/Privateroute";
 
 
 export const router = createBrowserRouter([
@@ -30,11 +31,15 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/addbooks',
-                Component: AddBookForm
+                element: <PrivateRoute>
+                    <AddBookForm></AddBookForm>
+                </PrivateRoute>
             },
             {
                 path: 'mybooks',
-                Component: MyBooks
+                element:<PrivateRoute>
+                    <MyBooks></MyBooks>
+                </PrivateRoute>
             },
             {
                 path: '/register',
@@ -51,7 +56,9 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'profile',
-                Component: Profile
+                element:<PrivateRoute>
+                    <Profile></Profile>
+                </PrivateRoute>
             },
             {
                 path: '*',
@@ -60,7 +67,9 @@ export const router = createBrowserRouter([
             {
                 path: "/books/:id",
                 loader: ({ params }) => fetch(`http://localhost:5000/books/${params.id}`),
-                Component: BookDetails
+                element:<PrivateRoute>
+                    <BookDetails></BookDetails>
+                </PrivateRoute>
             }
         ]
     },
