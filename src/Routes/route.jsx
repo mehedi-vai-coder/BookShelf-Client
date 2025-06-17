@@ -11,6 +11,7 @@ import Profile from "../Pages/Profile";
 import ErrorPage from "../Pages/ErrorPage";
 import BookDetails from "../Pages/BookDetails";
 import PrivateRoute from "../Context/Privateroute";
+import Loading from "../Pages/Loading";
 
 
 export const router = createBrowserRouter([
@@ -22,7 +23,8 @@ export const router = createBrowserRouter([
             {
                 index: true,
                 path: '/',
-                Component: Home
+                Component: Home,
+                hydrateFallbackElement:<Loading></Loading>
             },
             {
                 path: '/bookshelf',
@@ -52,7 +54,8 @@ export const router = createBrowserRouter([
             {
                 path: 'updatebook/:id',
                 loader: ({ params }) => fetch(`http://localhost:5000/books/${params.id}`),
-                Component: UpdateBookModal
+                Component: UpdateBookModal,
+                hydrateFallbackElement:<Loading></Loading>
             },
             {
                 path: 'profile',
@@ -67,6 +70,7 @@ export const router = createBrowserRouter([
             {
                 path: "/books/:id",
                 loader: ({ params }) => fetch(`http://localhost:5000/books/${params.id}`),
+                hydrateFallbackElement:<Loading></Loading>,
                 element:<PrivateRoute>
                     <BookDetails></BookDetails>
                 </PrivateRoute>
